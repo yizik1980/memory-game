@@ -44,7 +44,6 @@ function CardFront({ content }) {
     return (
       <div className="card-face card-front count-card">
         <CountDots count={content.count} emoji={content.emoji} />
-        <span className="count-label">{content.count}</span>
       </div>
     )
   }

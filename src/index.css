@@ -503,15 +503,15 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   gap: 10px;
   /* Board is ~3:4 (6 cols × 3 : 6 rows × 4). Grow from height, cap by width */
   height: 100%;
-  aspect-ratio: 3/4;
-  max-width: 88vw;
+  aspect-ratio: 1/1;
+  max-width: 92vw;
 }
 
 @media (max-width: 600px) {
   .game-board {
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(12, 1fr);
-    aspect-ratio: 3/8;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(9, 1fr);
+    aspect-ratio: 4/9;
     gap: 6px;
   }
 }
