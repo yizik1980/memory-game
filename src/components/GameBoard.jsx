@@ -8,7 +8,6 @@ export default function GameBoard() {
 
   return (
     <div className="game-layout">
-      <ScoreBar />
       <div className="board-wrapper">
         <div className="game-board">
           {cards.value.map(card => (
@@ -16,6 +15,7 @@ export default function GameBoard() {
           ))}
         </div>
       </div>
+      <ScoreBar />
     </div>
   )
 }
