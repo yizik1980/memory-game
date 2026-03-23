@@ -1,13 +1,16 @@
 import { flipCard } from '../signals/game'
 
 function CountDots({ count, emoji }) {
-  // Render count dots/emojis in a compact grid
+  const cols = Math.ceil(Math.sqrt(count))
+  const rows = Math.ceil(count / cols)
   const items = Array.from({ length: count })
   return (
     <div
       className="count-grid"
       style={{
-        gridTemplateColumns: `repeat(${Math.min(count <= 4 ? count : count <= 9 ? 3 : 4, 4)}, 1fr)`,
+        gridTemplateColumns: `repeat(${cols}, 1fr)`,
+        gridTemplateRows: `repeat(${rows}, 1fr)`,
+        '--dot-size': `${Math.round(80 / cols)}cqmin`,
       }}
     >
       {items.map((_, i) => (
