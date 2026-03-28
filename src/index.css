@@ -229,6 +229,92 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   font-size: 0.85rem;
 }
 
+/* Multiplayer / room styles */
+.waiting-box {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  margin: 1rem 0;
+}
+.waiting-label {
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  margin-bottom: 0.5rem;
+}
+.room-code {
+  font-size: 2.8rem;
+  font-weight: 800;
+  letter-spacing: 0.3em;
+  color: var(--accent);
+  margin: 0.5rem 0;
+}
+.waiting-hint {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-bottom: 0.75rem;
+}
+.waiting-spinner {
+  font-size: 1rem;
+  color: var(--text-dim);
+}
+.your-turn-badge {
+  font-size: 0.8rem;
+  color: #2ecc71;
+  font-weight: 600;
+}
+.you-label {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  font-weight: 400;
+}
+
+/* Room browser */
+.room-list {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 14px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  min-height: 80px;
+  width: 100%;
+  max-width: 380px;
+  margin-inline: auto;
+}
+.room-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-bottom: 0.75rem;
+}
+.room-list-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 10px;
+  padding: 0.6rem 0.9rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  color: var(--text);
+  text-align: right;
+}
+.room-list-item:hover {
+  background: rgba(124,58,237,0.18);
+  border-color: var(--accent);
+}
+.room-item-avatar { font-size: 1.5rem; flex-shrink: 0; }
+.room-item-name   { flex: 1; font-weight: 600; }
+.room-item-code   { font-size: 0.75rem; color: var(--text-dim); letter-spacing: 0.1em; }
+.room-item-join   { font-size: 0.8rem; color: var(--accent); font-weight: 600; flex-shrink: 0; }
+.room-manual      { margin-bottom: 0.5rem; }
+
 /* ══════════════════════════════════════════════════════════════════════
    BUTTONS
 ══════════════════════════════════════════════════════════════════════ */
@@ -597,7 +683,7 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 /* ══════════════════════════════════════════════════════════════════════
    CARDS
 ══════════════════════════════════════════════════════════════════════ */
-.memory-card {
+.rd {
   /* No fixed aspect-ratio: size comes from the grid rows/columns */
   min-width: 0;
   min-height: 0;

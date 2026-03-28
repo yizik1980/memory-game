@@ -1,5 +1,5 @@
 import { useSignals } from '@preact/signals-react/runtime'
-import { players, gameMode, resetToSetup, initGame } from '../signals/game'
+import { players, myPlayerIndex, playAgain, leaveRoom } from '../signals/game'
 
 function Podium({ sorted }) {
   const medals = ['🥇', '🥈', '🥉']
@@ -20,13 +20,10 @@ function Podium({ sorted }) {
 export default function GameOver() {
   useSignals()
 
-  const sorted = [...players.value].sort((a, b) => b.score - a.score)
-  const winner = sorted[0]
-  const isTie = sorted.length > 1 && sorted[0].score === sorted[1].score
-
-  const handlePlayAgain = () => {
-    initGame(gameMode.value)
-  }
+  const sorted   = [...players.value].sort((a, b) => b.score - a.score)
+  const winner   = sorted[0]
+  const isTie    = sorted.length > 1 && sorted[0].score === sorted[1].score
+  const isCreator = myPlayerIndex.value === 0
 
   return (
     <div className="screen gameover-screen" dir="rtl">
@@ -48,10 +45,14 @@ export default function GameOver() {
         <Podium sorted={sorted} />
 
         <div className="gameover-actions">
-          <button className="btn btn-primary" onClick={handlePlayAgain}>
-            🔄 שחק שוב (אותו מצב)
-          </button>
-          <button className="btn btn-secondary" onClick={() => { players.value = players.value; resetToSetup() }}>
+          {isCreator ? (
+            <button className="btn btn-primary" onClick={playAgain}>
+              🔄 שחק שוב
+            </button>
+          ) : (
+            <p className="waiting-hint">⏳ ממתין לשחקן הראשון להתחיל מחדש...</p>
+          )}
+          <button className="btn btn-secondary" onClick={leaveRoom}>
             🏠 מסך ראשי
           </button>
         </div>
