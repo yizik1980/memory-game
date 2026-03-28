@@ -692,7 +692,7 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   border-radius: var(--radius);
   container-type: size;  /* enables cqw/cqh units for children */
 }
-.memory-card.matched { cursor: default; }
+.memory-card.matched { cursor: default; overflow: visible; }
 
 .card-inner {
   width: 100%;
@@ -910,9 +910,14 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 }
 .screen > * { animation: fadeIn 0.4s ease; }
 
-@keyframes pop {
-  0%   { transform: scale(1); }
-  50%  { transform: scale(1.15); }
-  100% { transform: scale(1); }
+@keyframes match-fall {
+  0%   { transform: scale(1);    opacity: 1; }
+  20%  { transform: scale(1.12); opacity: 1; }
+  50%  { transform: scale(1);    opacity: 1; }
+  100% { transform: translateY(60px) scale(0.4); opacity: 0; }
 }
-.memory-card.matched { animation: pop 0.35s ease; }
+.memory-card.matched {
+  animation: match-fall 0.9s ease-in forwards;
+  animation-delay: 0.5s;
+  pointer-events: none;
+}
