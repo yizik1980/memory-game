@@ -69,14 +69,16 @@ export default function Card({ card }) {
   ].filter(Boolean).join(' ')
 
   return (
-    <div className={className} onClick={handleClick} role="button" tabIndex={0}
-      onKeyDown={e => e.key === 'Enter' && handleClick()}
-    >
-      <div className="card-inner">
-        <div className="card-face card-back">
-          <span className="card-back-icon">🃏</span>
+    <div className="card-container">
+      <div className={className} onClick={handleClick} role="button" tabIndex={0}
+        onKeyDown={e => e.key === 'Enter' && handleClick()}
+      >
+        <div className="card-inner">
+          <div className="card-face card-back">
+            <span className="card-back-icon">🃏</span>
+          </div>
+          <CardFront content={content} />
         </div>
-        <CardFront content={content} />
       </div>
     </div>
   )
