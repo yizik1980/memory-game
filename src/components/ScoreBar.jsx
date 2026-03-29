@@ -1,5 +1,5 @@
 import { useSignals } from '@preact/signals-react/runtime'
-import { players, currentPlayerIndex, cards, gameMode, myPlayerIndex, isMyTurn, leaveRoom } from '../signals/game'
+import { players, currentPlayerIndex, cards, gameMode, gameType, myPlayerIndex, isMyTurn, backToModeSelect, leaveRoom } from '../signals/game'
 
 export default function ScoreBar() {
   useSignals()
@@ -8,6 +8,7 @@ export default function ScoreBar() {
   const total    = cards.value.length / 2
   const progress = total > 0 ? (matched / total) * 100 : 0
   const current  = players.value[currentPlayerIndex.value]
+  const isLocal  = gameType.value === 'local'
 
   return (
     <aside className="side-panel" dir="rtl">
@@ -21,7 +22,7 @@ export default function ScoreBar() {
         <div className="side-turn-text">
           <span className="side-turn-hint">התור של</span>
           <strong className="side-turn-name">{current?.name}</strong>
-          {isMyTurn.value && <span className="your-turn-badge">— זה אתה!</span>}
+          {!isLocal && isMyTurn.value && <span className="your-turn-badge">— זה אתה!</span>}
         </div>
       </div>
 
@@ -45,15 +46,17 @@ export default function ScoreBar() {
             <span className="ps-avatar">{player.avatar}</span>
             <span className="ps-name">
               {player.name}
-              {index === myPlayerIndex.value && <span className="you-label"> (אתה)</span>}
+              {!isLocal && index === myPlayerIndex.value && <span className="you-label"> (אתה)</span>}
             </span>
             <span className="ps-score">{player.score}</span>
           </div>
         ))}
       </div>
 
-      <button className="btn btn-back side-back-btn" onClick={leaveRoom}>
-        🚪 עזוב משחק
+      <button className="btn btn-back side-back-btn"
+        onClick={isLocal ? backToModeSelect : leaveRoom}
+      >
+        {isLocal ? '↩ חזור למצבי משחק' : '🚪 עזוב משחק'}
       </button>
 
     </aside>

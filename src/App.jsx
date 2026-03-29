@@ -1,5 +1,7 @@
 import { useSignals } from '@preact/signals-react/runtime'
 import { gamePhase, leaveRoom } from './signals/game'
+import GameTypeSelect from './components/GameTypeSelect'
+import PlayerSetup from './components/PlayerSetup'
 import RoomSetup from './components/RoomSetup'
 import GameModeSelect from './components/GameModeSelect'
 import GameBoard from './components/GameBoard'
@@ -27,10 +29,12 @@ export default function App() {
 
   return (
     <div className="app">
+      {phase === 'start'                      && <GameTypeSelect />}
+      {phase === 'setup'                      && <PlayerSetup />}
       {(phase === 'room' || phase === 'waiting') && <RoomSetup />}
-      {phase === 'mode-select' && <GameModeSelect />}
-      {phase === 'playing'     && <GameBoard />}
-      {phase === 'finished'    && <GameOver />}
+      {phase === 'mode-select'                && <GameModeSelect />}
+      {phase === 'playing'                    && <GameBoard />}
+      {phase === 'finished'                   && <GameOver />}
     </div>
   )
 }
