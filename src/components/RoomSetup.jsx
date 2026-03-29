@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useSignals } from '@preact/signals-react/runtime'
-import { gamePhase, roomId, roomError, createRoom, joinRoom, leaveRoom } from '../signals/game'
+import { gamePhase, roomError, createRoom, joinRoom, leaveRoom } from '../signals/game'
 import { SERVER_URL } from '../config'
 
 const AVATARS = ['🦁','🐯','🐺','🦊','🐻','🐼','🐨','🦄','🐸','🦋','🐙','🦖','🤖','👾','🧙','👻','🦸','🎃','🐲','🌟']
@@ -35,7 +35,6 @@ export default function RoomSetup() {
   const [avatar, setAvatar]         = useState(AVATARS[0])
   const [showPicker, setShowPicker] = useState(false)
   const [mode, setMode]             = useState(null) // null | 'create' | 'join'
-  const [manualCode, setManualCode] = useState('')
 
   const phase      = gamePhase.value
   const canProceed = name.trim().length > 0
@@ -49,10 +48,8 @@ export default function RoomSetup() {
         <div className="setup-container">
           <h1 className="game-title">🃏 משחק זיכרון</h1>
           <div className="waiting-box">
-            <p className="waiting-label">קוד החדר שלך</p>
-            <div className="room-code">{roomId.value}</div>
-            <p className="waiting-hint">שתף את הקוד עם השחקן השני ✉️</p>
             <p className="waiting-spinner">⏳ ממתין לשחקן שני...</p>
+            <p className="waiting-hint">החדר שלך מופיע ברשימה אצל שחקנים אחרים</p>
           </div>
           <button className="btn btn-back" onClick={leaveRoom}>← ביטול</button>
         </div>
@@ -103,7 +100,7 @@ export default function RoomSetup() {
             <button
               className={`btn btn-primary ${!canProceed ? 'disabled' : ''}`}
               disabled={!canProceed}
-              onClick={() => setMode('create')}
+              onClick={() => createRoom(name.trim(), avatar)}
             >+ צור חדר חדש</button>
             <button
               className={`btn btn-secondary ${!canProceed ? 'disabled' : ''}`}
@@ -113,20 +110,9 @@ export default function RoomSetup() {
           </div>
         )}
 
-        {/* ── Create ── */}
-        {mode === 'create' && (
-          <div className="setup-actions">
-            <button className="btn btn-primary" onClick={() => createRoom(name.trim(), avatar)}>
-              צור חדר ▶
-            </button>
-            <button className="btn btn-back" onClick={() => setMode(null)}>← חזור</button>
-          </div>
-        )}
-
-        {/* ── Join ── */}
+        {/* ── Join — room list only ── */}
         {mode === 'join' && (
           <>
-            {/* Room list */}
             <div className="room-list">
               <div className="room-list-header">
                 <span>חדרים פתוחים</span>
@@ -149,31 +135,9 @@ export default function RoomSetup() {
                 >
                   <span className="room-item-avatar">{room.avatar}</span>
                   <span className="room-item-name">{room.name}</span>
-                  <span className="room-item-code">{room.roomId}</span>
                   <span className="room-item-join">הצטרף ▶</span>
                 </button>
               ))}
-            </div>
-
-            {/* Manual code fallback */}
-            <div className="room-manual">
-              <p className="waiting-hint">או הקלד קוד ידנית:</p>
-              <div className="setup-actions">
-                <input
-                  className="player-name-input"
-                  style={{ textAlign: 'center', letterSpacing: '0.2em', textTransform: 'uppercase', maxWidth: 160 }}
-                  type="text"
-                  placeholder="קוד חדר"
-                  value={manualCode}
-                  maxLength={5}
-                  onChange={e => setManualCode(e.target.value.toUpperCase())}
-                />
-                <button
-                  className={`btn btn-primary ${!manualCode.trim() ? 'disabled' : ''}`}
-                  disabled={!manualCode.trim()}
-                  onClick={() => joinRoom(manualCode.trim(), name.trim(), avatar)}
-                >הצטרף</button>
-              </div>
             </div>
 
             <button className="btn btn-back" onClick={() => setMode(null)}>← חזור</button>

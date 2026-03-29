@@ -12,6 +12,11 @@ const app        = express()
 const httpServer = createServer(app)
 const io         = new Server(httpServer, { cors: { origin: CLIENT_URL } })
 
+app.use((_req, res, next) => {
+  res.header('Access-Control-Allow-Origin', CLIENT_URL)
+  next()
+})
+
 const rooms = new Map()
 
 function generateRoomId() {
