@@ -14,7 +14,7 @@ export default function ScoreBar() {
     <aside className="side-panel" dir="rtl">
 
       <div className="side-mode-label">
-        {gameMode.value === 'hebrew' ? '🔤 אותיות עבריות' : '🔢 מספרים וכמויות'}
+        {{ hebrew: '🔤 אותיות עבריות', animals: '🐾 חיות א–ל', counting: '🐾 ספור חיות', numbers: '🔢 מספרים וכמויות' }[gameMode.value]}
       </div>
 
       <div className="side-turn">

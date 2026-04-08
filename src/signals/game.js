@@ -3,6 +3,8 @@ import { socket } from '../socket'
 import { shuffle } from '../utils/shuffle'
 import { hebrewPairs } from '../data/hebrewData'
 import { numberPairs } from '../data/numbersData'
+import { hebrewAnimalPairs } from '../data/hebrewAnimalsData'
+import { numberAnimalPairs } from '../data/numberAnimalPairs'
 
 // ─── State ─────────────────────────────────────────────────────────────────
 export const gameType          = signal(null)   // 'local' | 'online'
@@ -52,6 +54,18 @@ function buildNumberDeck() {
     { id: `val-${pair.id}`, pairId: pair.id, cardType: 'value', content: { type: 'count', count: pair.number, emoji: pair.emoji }, isFlipped: false, isMatched: false },
   ])
 }
+function buildAnimalsDeck() {
+  return hebrewAnimalPairs.flatMap(pair => [
+    { id: `key-${pair.id}`, pairId: pair.id, cardType: 'key',   content: { type: 'letter', letter: pair.letter },             isFlipped: false, isMatched: false },
+    { id: `val-${pair.id}`, pairId: pair.id, cardType: 'value', content: { type: 'word', word: pair.word, emoji: pair.emoji }, isFlipped: false, isMatched: false },
+  ])
+}
+function buildCountingDeck() {
+  return numberAnimalPairs.flatMap(pair => [
+    { id: `key-${pair.id}`, pairId: pair.id, cardType: 'key',   content: { type: 'number', number: pair.number },                       isFlipped: false, isMatched: false },
+    { id: `val-${pair.id}`, pairId: pair.id, cardType: 'value', content: { type: 'count',  count: pair.number, emoji: pair.emoji }, isFlipped: false, isMatched: false },
+  ])
+}
 
 // ─── Game type selection ────────────────────────────────────────────────────
 export function chooseLocal() {
@@ -71,7 +85,11 @@ export function setPlayers(playerList) {
 
 export function initGame(mode) {
   gameMode.value           = mode
-  cards.value              = shuffle(mode === 'hebrew' ? buildHebrewDeck() : buildNumberDeck())
+  const deck = mode === 'hebrew' ? buildHebrewDeck()
+             : mode === 'animals'   ? buildAnimalsDeck()
+             : mode === 'counting'  ? buildCountingDeck()
+             : buildNumberDeck()
+  cards.value              = shuffle(deck)
   flippedCardIds.value     = []
   isLocked.value           = false
   currentPlayerIndex.value = 0

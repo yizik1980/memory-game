@@ -4,6 +4,8 @@ import { Server } from 'socket.io'
 import { shuffle } from '../src/utils/shuffle.js'
 import { hebrewPairs } from '../src/data/hebrewData.js'
 import { numberPairs } from '../src/data/numbersData.js'
+import { hebrewAnimalPairs } from '../src/data/hebrewAnimalsData.js'
+import { numberAnimalPairs } from '../src/data/numberAnimalPairs.js'
 
 const PORT        = process.env.PORT || 3001
 const CLIENT_URL  = process.env.CLIENT_URL || '*'
@@ -26,18 +28,18 @@ function generateRoomId() {
 }
 
 function buildDeck(mode) {
-  const pairs = mode === 'hebrew' ? hebrewPairs : numberPairs
-  return shuffle(pairs.flatMap(pair =>
-    mode === 'hebrew'
-      ? [
-          { id: `key-${pair.id}`, pairId: pair.id, cardType: 'key',   content: { type: 'letter', letter: pair.letter },              isFlipped: false, isMatched: false },
-          { id: `val-${pair.id}`, pairId: pair.id, cardType: 'value', content: { type: 'word', word: pair.word, emoji: pair.emoji }, isFlipped: false, isMatched: false },
-        ]
-      : [
-          { id: `key-${pair.id}`, pairId: pair.id, cardType: 'key',   content: { type: 'number', number: pair.number },                      isFlipped: false, isMatched: false },
-          { id: `val-${pair.id}`, pairId: pair.id, cardType: 'value', content: { type: 'count',  count: pair.number, emoji: pair.emoji }, isFlipped: false, isMatched: false },
-        ]
-  ))
+  if (mode === 'numbers' || mode === 'counting') {
+    const numPairs = mode === 'counting' ? numberAnimalPairs : numberPairs
+    return shuffle(numPairs.flatMap(pair => [
+      { id: `key-${pair.id}`, pairId: pair.id, cardType: 'key',   content: { type: 'number', number: pair.number },                      isFlipped: false, isMatched: false },
+      { id: `val-${pair.id}`, pairId: pair.id, cardType: 'value', content: { type: 'count',  count: pair.number, emoji: pair.emoji }, isFlipped: false, isMatched: false },
+    ]))
+  }
+  const pairs = mode === 'animals' ? hebrewAnimalPairs : hebrewPairs
+  return shuffle(pairs.flatMap(pair => [
+    { id: `key-${pair.id}`, pairId: pair.id, cardType: 'key',   content: { type: 'letter', letter: pair.letter },             isFlipped: false, isMatched: false },
+    { id: `val-${pair.id}`, pairId: pair.id, cardType: 'value', content: { type: 'word', word: pair.word, emoji: pair.emoji }, isFlipped: false, isMatched: false },
+  ]))
 }
 
 function broadcast(roomId) {

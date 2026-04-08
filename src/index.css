@@ -402,8 +402,8 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 .mode-cards {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(12px, 3vw, 20px);
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: clamp(10px, 2.5vw, 18px);
   margin-bottom: 8px;
 }
 
@@ -427,12 +427,18 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   opacity: 0;
   transition: opacity 0.25s;
 }
-.hebrew-mode::before { background: radial-gradient(circle at center, rgba(6,182,212,0.15), transparent 70%); }
+.hebrew-mode::before  { background: radial-gradient(circle at center, rgba(6,182,212,0.15),  transparent 70%); }
+.animals-mode::before { background: radial-gradient(circle at center, rgba(16,185,129,0.15), transparent 70%); }
 .numbers-mode::before { background: radial-gradient(circle at center, rgba(245,158,11,0.15), transparent 70%); }
 .mode-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
 .mode-card:hover::before { opacity: 1; }
-.hebrew-mode:hover { border-color: var(--hebrew-clr); }
-.numbers-mode:hover { border-color: var(--numbers-clr); }
+.hebrew-mode:hover  { border-color: var(--hebrew-clr); }
+.animals-mode:hover  { border-color: var(--success); }
+.counting-mode:hover { border-color: #f472b6; }
+.numbers-mode:hover  { border-color: var(--numbers-clr); }
+.animals-mode .mode-icon  { color: var(--success); }
+.counting-mode::before { background: radial-gradient(circle at center, rgba(244,114,182,0.15), transparent 70%); }
+.counting-mode .mode-icon { color: #f472b6; }
 
 .mode-icon {
   font-size: 3rem;
@@ -476,7 +482,7 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   color: var(--text-dim);
 }
 
-@media (max-width: 500px) {
+@media (max-width: 420px) {
   .mode-cards { grid-template-columns: 1fr; }
 }
 
