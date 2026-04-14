@@ -27,7 +27,7 @@ export default function GameModeSelect() {
         {isCreator ? (
           <div className="mode-cards">
 
-            {/* <button className="mode-card hebrew-mode" onClick={() => handleMode('hebrew')}>
+            {<button className="mode-card hebrew-mode" onClick={() => handleMode('hebrew')}>
               <span className="mode-icon">א</span>
               <h3 className="mode-name">אותיות עבריות</h3>
               <p className="mode-desc">התאימו אות עברית<br />לדבר שמתחיל באותה אות</p>
@@ -36,7 +36,7 @@ export default function GameModeSelect() {
                 <span className="example-pair">ש ← שועל 🦊</span>
               </div>
               <span className="mode-badge">18 זוגות</span>
-            </button> */}
+            </button> }
 
             <button className="mode-card animals-mode" onClick={() => handleMode('animals')}>
               <span className="mode-icon">🐾</span>
@@ -49,7 +49,7 @@ export default function GameModeSelect() {
               <span className="mode-badge">12 זוגות</span>
             </button>
 
-            {/* <button className="mode-card numbers-mode" onClick={() => handleMode('numbers')}>
+            { <button className="mode-card numbers-mode" onClick={() => handleMode('numbers')}>
               <span className="mode-icon">123</span>
               <h3 className="mode-name">מספרים וכמויות</h3>
               <p className="mode-desc">התאימו מספר<br />לכמות הפריטים המתאימה</p>
@@ -58,7 +58,7 @@ export default function GameModeSelect() {
                 <span className="example-pair">7 ← 🍎×7</span>
               </div>
               <span className="mode-badge">18 זוגות</span>
-            </button> */}
+            </button> }
 
             <button className="mode-card counting-mode" onClick={() => handleMode('counting')}>
               <span className="mode-icon">🐾</span>
