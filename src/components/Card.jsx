@@ -1,4 +1,5 @@
 import { flipCard } from '../signals/game'
+import { playFlip } from '../utils/sounds'
 
 function CountDots({ count, emoji }) {
   const cols = Math.ceil(Math.sqrt(count))
@@ -58,6 +59,7 @@ export default function Card({ card }) {
 
   const handleClick = () => {
     if (!isFlipped && !isMatched) {
+      playFlip()
       flipCard(card.id)
     }
   }

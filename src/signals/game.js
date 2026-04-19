@@ -1,6 +1,7 @@
 import { signal, computed } from '@preact/signals-react'
 import { socket } from '../socket'
 import { shuffle } from '../utils/shuffle'
+import { playMatch } from '../utils/sounds'
 import { hebrewPairs } from '../data/hebrewData'
 import { numberPairs } from '../data/numbersData'
 import { hebrewAnimalPairs } from '../data/hebrewAnimalsData'
@@ -27,6 +28,10 @@ export const isMyTurn      = computed(() =>
 
 // ─── Socket listeners (online only) ────────────────────────────────────────
 socket.on('gameStateUpdate', state => {
+  const prevMatchedIds = new Set(cards.value.filter(c => c.isMatched).map(c => c.id))
+  const newlyMatched   = state.cards.some(c => c.isMatched && !prevMatchedIds.has(c.id))
+  if (newlyMatched) playMatch()
+
   gamePhase.value          = state.phase
   gameMode.value           = state.gameMode
   players.value            = state.players
@@ -121,6 +126,7 @@ function _checkMatch([id1, id2]) {
 
   setTimeout(() => {
     if (matched) {
+      playMatch()
       cards.value = cards.value.map(c =>
         c.id === id1 || c.id === id2 ? { ...c, isMatched: true } : c
       )
